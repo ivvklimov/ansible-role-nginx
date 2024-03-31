@@ -1,0 +1,22 @@
+---
+- name: NGINX | Install the EPEL repository
+  become: true
+  ansible.builtin.package:
+    name: epel-release
+    state: present
+
+- name: NGINX | Update the repository
+  become: true
+  ansible.builtin.package:
+    name: '*'
+    state: latest
+
+- name: NGINX | Install NGINX Open Source
+  become: true
+  ansible.builtin.package:
+    name: nginx
+    state: present
+  notify: Restart nginx service
+
+- name: Flush handlers
+  meta: flush_handlers
